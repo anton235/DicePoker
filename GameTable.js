@@ -6,92 +6,113 @@ import CellElement from './CellElement';
 export default class GameTable extends Component {
   constructor(props) {
     super(props);
-
-    // const CellElement = () => {
-    //   const [value, setPoints] = React.useState();
-    //   return(      
-    //     <View>
-    //       <TextInput 
-    //         style={styles.inputStyle}
-    //         // instead of setState it will call function that calculate colSum (sumTable)
-    //         onChangeText={value => setPoints({value})} 
-    //         value = {value}
-    //       /> 
-    //     </View>
-    //   );
-    // }
-
-    const sumElement = () => (
-      <View>
-        <Text style={styles.inputStyle}>
-          {this.sumTable()}
-        </Text> 
-      </View>
-    );
-
-    const schoolSumCalc = (schoolSum,index) => {
-      console.log("index typeof is: ",typeof(index));
-      console.log("schoolSum is: ",this.schoolSum);
-      return this.state.schoolSum[index];
-    }
-
     this.state = {
-      tableTitle: ['1','2','3','4','5','6','SchoolSum',
-      'Pair','Two-Pair','Three of a kind','Full-House','Small Straight','Big Straight',
-      'Four of a kind','Five of a kind','Card Sum','ColSum']  ,
-      // schoolSum: [...Array(3 * this.props.playersNumber)].fill(0,0,1).fill(9,1,2).fill(0,2),
-      // colSum: [...Array(3 * this.props.playersNumber)].fill(0,0),
-
-      //create 3 columns for each player and fill them with 18 rows, first row player name, next challenges
-      // tableData: [...Array(3 * this.props.playersNumber)].map(x=>Array (18).fill('a',0,1).fill(cellElement(),1,17).fill(this.colSum().toString(),17)) ,
-
-      tableData: [...Array(3 * this.props.playersNumber)].map((x ,index)=>
-        Array (18).fill((index + 0) % this.props.playersNumber ? 
-        ((index + 1) % this.props.playersNumber ? 'c' : 'b') : 'a',0,1)
-        .fill(<CellElement colSum = {this.props.colSum[index]}/>,1,7) 
-        .fill(50,7,8)
-        .fill(<CellElement/>,8,17)
-        .fill(this.colSum().toString(),17)) ,
+      stepNumber : 0,
     }
   }
 
-
-
-  colSum(){
-    let arr = this.tableData;
-    console.log("tableData is: ",arr);
-    // let sum = 0;
-    // for(let i = 1; i < 15;i++){
-    //   if(typeof(arr[0][i]) == "string")
-    //     sum += parseInt(arr[0][i],10)
-    //   else
-    //     sum += arr[0][i]
-    // }
-    // return sum
-    return 23
+  setCellElement(col, row){
+    if (row == 0)
+      return <Text style={styles.text}>{(this.props.playersNamesArray[this.playerNumber(col)]).toUpperCase()}</Text>
+    else if (row == 7)
+      return <Text style={styles.text}>{this.props.schoolSum(col)}</Text>
+    else if (row == 17)
+      return <Text style={styles.text}>{this.props.colSum(col)}</Text>
+    else
+      return <CellElement 
+                key = {'' + col + row}
+                col = {col} 
+                row = {row} 
+                schoolSum = {this.props.schoolSum}
+                colSum = {this.props.colSum}
+                setPointsTable = {this.props.setPointsTable}
+                pointsTable = {this.props.pointsTable}
+                belongToPlayer = {this.playerNumber(col)}
+                stepNumber = {this.props.stepNumber}
+                setStepNumber = {this.props.setStepNumber}
+                numberOfPlayers = {this.props.numberOfPlayers}
+                
+                canEdit = {this.checkEditable(col,row)}
+              />
   }
 
-  sumTable(){
-    return this.state.tableData[0][17]
-    // return this.props.playersNumber
+  checkEditable(col,row){
+    if(this.playerNumber(col) == (this.props.stepNumber % parseInt(this.props.numberOfPlayers))){
+      if( this.checkFirstCols(col,row) == true || 
+        this.checkSecondCols(col,row) == true || 
+        ((this.playerNumber(col) + parseInt(this.props.numberOfPlayers) * 2) == col)
+        ){
+          return true;
+      }
+    }
+    return false;
   }
- 
+
+  checkFirstCols(col,row){
+    let pointsTable = this.props.pointsTable;
+    if(this.playerNumber(col) == col){
+      if(row == 1 && pointsTable[col][row - 1] == undefined && pointsTable[col][row] == undefined)
+        return true;
+      else if(((row > 1 && row < 7) || (row > 8 && row <= 16)) && pointsTable[col][row - 2] != undefined && pointsTable[col][row - 1] == undefined)
+        return true;
+      else if(row == 8 && pointsTable[col][row - 3] != undefined && pointsTable[col][row - 1] == undefined)
+        return true;
+      // else if(row == 16 && pointsTable[col][row - 1] == undefined && pointsTable[col][row - 2] != undefined)
+      //   return true;
+    }
+    return false;
+  }
+
+  checkSecondCols(col,row){
+    let pointsTable = this.props.pointsTable;
+    if((this.playerNumber(col) + parseInt(this.props.numberOfPlayers)) == col){
+      if(row == 16 && pointsTable[col][row - 1] == undefined)
+        return true;
+      else if(((row => 1 && row < 6) || (row > 7 && row < 16)) && pointsTable[col][row - 1] == undefined && pointsTable[col][row] != undefined)
+        return true;
+      else if(row == 6 && pointsTable[col][row - 1] == undefined && pointsTable[col][row + 1] != undefined)
+        return true;
+      // else if(row == 1 && pointsTable[col][row - 1] == undefined && pointsTable[col][row] != undefined)
+      //   return true;
+    }
+    return false;
+  }
+
+  playerNumber(col){
+    let numberOfPlayers = parseInt(this.props.numberOfPlayers);
+    if((col % numberOfPlayers) == 0){
+      return 0;
+    }
+    else if (numberOfPlayers == 3){
+      if(((col + 1) % numberOfPlayers) == 0 )
+        return 2;
+      else
+        return 1;
+    }
+    else
+      return 1;
+  }
+
   render() {
     const state = this.state;
+    //create 3 columns for each player and fill them with 18 rows, first row player name, next challenges
+    let tableData = [...Array(3 * this.props.numberOfPlayers)]
+                    .map((x ,col)=> Array.from({length : 18}, (y,row) => this.setCellElement(col, row)));
+
+    let tableTitle = ['1','2','3','4','5','6','SchoolSum','Pair','Two-Pair','Three of a kind','Full-House',
+                      'Small Straight','Big Straight','Four of a kind','Five of a kind','Card Sum','ColSum'] ;
     return (
-      <View style={styles.container}>
-        {/* <Text style={styles.btnText}>{this.props.playersNumber}</Text> */}
-        <Text style={styles.btnText}>{this.sumTable()}</Text>
+      <View>
         <Table style={{flexDirection: 'row'}} borderStyle={{borderWidth: 1}}>
           {/* Right Wrapper */}
           <TableWrapper style={{flex:1}}>
-            <Cols data={state.tableData} heightArr={[40, 30, 30, 30, 30, 30, 30, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35]} textStyle={styles.text}/>
+            <Cols data={tableData} heightArr={[40, 30, 30, 30, 30, 30, 30, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35]} textStyle={styles.text}/>
           </TableWrapper>
           {/* Left Wrapper */}
           <TableWrapper style={{width: 90}}>
             <Cell data="Challenge" style={styles.singleHead}/>
             <TableWrapper style={{flexDirection: 'row'}}>
-              <Col data={state.tableTitle} style={styles.title} heightArr={[30, 30, 30, 30, 30, 30, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35]} textStyle={styles.titleText}></Col>
+              <Col data={tableTitle} style={styles.title} heightArr={[30, 30, 30, 30, 30, 30, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35, 35]} textStyle={styles.titleText}></Col>
             </TableWrapper>
           </TableWrapper>
         </Table>

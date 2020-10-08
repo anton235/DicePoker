@@ -3,17 +3,51 @@ import { StyleSheet, Text, TextInput, Button, View } from "react-native";
 import GameTable from './GameTable';
 
 export default function PlayersDataForm(props) {
-    const [playersNames, setPlayersNames] = React.useState(2);
     const [playersNamesSubmitted, submitPlayersNames] = React.useState(false);
+    const [stepNumber, setStepNumber] = React.useState(0);
 
-    let schoolSum = [...Array(3 * props.playersNumber)].fill(0,0,1).fill(9,1,2).fill(0,2);
-    let colSum = [...Array(3 * props.playersNumber)].fill(0,0);
+    function schoolSum(col){
+        let sum = 0;
+        for(let i = 0; i < 6; i++){
+            if(!(isNaN(pointsTable[col][i])))
+                sum += parseInt(pointsTable[col][i]);
+            else if(isNaN(pointsTable[col][i]))
+                sum += 0;
+        }
+        if(sum < 0)
+            sum -= 100;
+        else 
+            sum += 50;
+        return sum;
+    }
+
+    function colSum(col){
+        let sum = this.schoolSum(col);
+        for(let i = 7; i < 16; i++){
+            if(!(isNaN(pointsTable[col][i])))
+                sum += parseInt(pointsTable[col][i]);
+            else if(isNaN(pointsTable[col][i]))
+                sum += 0;
+        }
+        return sum;
+    }
+
+    const [pointsTable, setPointsTable] = React.useState([...Array(3 * props.numberOfPlayers)]
+        .map((x,index)=>Array (17)
+        .fill()
+        // .fill(0,0,6)
+        // .fill(`school ${index} sum`,6,7)
+        // .fill(schoolSum(index),6,7)
+        // .fill(0,7,16)
+        // .fill(`col ${index} sum`,16)
+        // .fill(colSum(index),16)
+        ));
 
     let nameForm = [];
 
     props.playersNamesArray.forEach((player,index) => {
         nameForm.push(
-            <View> 
+            <View key={index}>  
                 <Text>Player Name: </Text>
                 <TextInput 
                     style={styles.inputStyle}
@@ -29,15 +63,18 @@ export default function PlayersDataForm(props) {
     })
 
     return (
-        <View style={styles.container}> 
-        {/* <Text style={styles.title}>{props.playersNamesArray[0]}</Text> */}
+        <View> 
         { playersNamesSubmitted ?
-            <View style={styles.container}>
+            <View>
                 <GameTable 
-                    playersNumber = {props.playersNumber} 
+                    numberOfPlayers = {props.numberOfPlayers} 
                     playersNamesArray = {props.playersNamesArray}
                     schoolSum = {schoolSum}
                     colSum = {colSum}
+                    pointsTable = {pointsTable}
+                    setPointsTable = {setPointsTable}
+                    stepNumber ={stepNumber}
+                    setStepNumber ={setStepNumber}
                     />
             </View>
             : 

@@ -4,44 +4,54 @@ import { StyleSheet, Text, TextInput, Button, View } from "react-native";
 import PlayersDataForm from './PlayersDataForm';
 
 export default function GameInitializer() {
-  const [playersNumber, setPlayersNumber] = React.useState(2);
-  const [playersNumberSubmitted, submitPlayersNumber] = React.useState(false);
+  const [numberOfPlayers, setNumberOfPlayers] = React.useState(2);
+  const [numberOfPlayersSubmitted, submitNumberOfPlayers] = React.useState(false);
 
-  function createPlayersNamesArray(playersNumber){
-    let playersNamesArray = [...Array(parseInt(playersNumber))].fill('nameMe',0);
+  function createPlayersNamesArray(numberOfPlayers){
+    let playersNamesArray = [...Array(parseInt(numberOfPlayers))].fill('nameMe',0);
     return playersNamesArray;
   }
 
   return (
     <View>
-      { playersNumberSubmitted ?
-        <View style={styles.container}>
-          <PlayersDataForm playersNamesArray = {createPlayersNamesArray(playersNumber)} playersNumber = {playersNumber}/>
+      { numberOfPlayersSubmitted ?
+        <View>
+          <PlayersDataForm playersNamesArray = {createPlayersNamesArray(numberOfPlayers)} numberOfPlayers = {numberOfPlayers}/>
+          <View style={styles.container}>
+            <Button
+                  onPress={() => {
+                    submitNumberOfPlayers(!numberOfPlayersSubmitted);
+                    setNumberOfPlayers(2);
+                  }}
+                  title="Home Page"
+                  color="#841584"
+                />
+          </View>
         </View>
         : 
         <View style={styles.container}> 
           <View>
             <TextInput 
                 style={styles.inputStyle}
-                onChangeText={text => setPlayersNumber(text)}
-                onSubmitEditing = {(event) => (submitPlayersNumber(!playersNumberSubmitted))}
-                playersNumber = {playersNumber}
+                onChangeText={text => setNumberOfPlayers(text)}
+                onSubmitEditing = {(event) => (submitNumberOfPlayers(!numberOfPlayersSubmitted))}
+                numberOfPlayers = {numberOfPlayers}
                 placeholder = "Number of Players"
                 maxLength = {2}
               />
 
             <View style={styles.buttonContainer}>  
               <Button
-                onPress={() => {submitPlayersNumber(!playersNumberSubmitted);}}
+                onPress={() => {submitNumberOfPlayers(!numberOfPlayersSubmitted);}}
                 title="Submit"
                 color="#841584"
               />
             </View>
             
-            <View>
+            {/* <View>
               <Text>Number of Players is: {playersNumber}</Text>
               <Text>Was Number of Players submitted: {playersNumberSubmitted.toString()}</Text>
-            </View>
+            </View> */}
           </View>
         </View>
       }
@@ -55,18 +65,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  title: {
-    marginTop: 35,
-    paddingVertical: 8,
-    borderWidth: 4,
-    borderColor: "#20232a",
-    borderRadius: 6,
-    backgroundColor: "#61dafb",
-    color: "#20232a",
-    textAlign: "center",
-    fontSize: 30,
-    fontWeight: "bold"
   },
   buttonContainer: {
     marginTop: 10,
@@ -84,7 +82,4 @@ const styles = StyleSheet.create({
     backgroundColor: '#b9e4c9',
     textAlign: "center",
   },
-  // gameGrid:{
-  //   marginTop: 30,
-  // }
 });
