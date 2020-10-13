@@ -31,14 +31,17 @@ export default function GameInitializer() {
         : 
         <View style={styles.container}> 
           <View>
-            <TextInput 
-                style={styles.inputStyle}
-                onChangeText={text => setNumberOfPlayers(text)}
-                onSubmitEditing = {(event) => (submitNumberOfPlayers(!numberOfPlayersSubmitted))}
-                numberOfPlayers = {numberOfPlayers}
-                placeholder = "Number of Players"
-                maxLength = {2}
-              />
+            {/* <label>Enter Number of Players:  */}
+              <TextInput 
+                  style={styles.inputStyle}
+                  onChangeText={text => setNumberOfPlayers(text)}
+                  onSubmitEditing = {(event) => (submitNumberOfPlayers(!numberOfPlayersSubmitted))}
+                  numberOfPlayers = {numberOfPlayers}
+                  placeholder = "Number of Players"
+                  placeholderTextColor = "#73377e"
+                  maxLength = {1}
+                />
+            {/* </label> */}
 
             <View style={styles.buttonContainer}>  
               <Button
@@ -47,11 +50,6 @@ export default function GameInitializer() {
                 color="#841584"
               />
             </View>
-            
-            {/* <View>
-              <Text>Number of Players is: {playersNumber}</Text>
-              <Text>Was Number of Players submitted: {playersNumberSubmitted.toString()}</Text>
-            </View> */}
           </View>
         </View>
       }
@@ -81,5 +79,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     backgroundColor: '#b9e4c9',
     textAlign: "center",
+    borderBottomWidth: 2,
+    borderBottomColor: 'gray',
   },
 });

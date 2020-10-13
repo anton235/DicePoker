@@ -9,6 +9,9 @@ export default function CellElement(props) {
   const updateValue = (points) =>{
     // Get a copy of the expenses array
     const pointsTable = [ ...props.pointsTable ];
+
+    if(points)
+
     // Replace the current expense item
     pointsTable[props.col][props.row - 1] = points;
     pointsTable[props.col][6] = props.schoolSum(props.col);
@@ -21,11 +24,10 @@ export default function CellElement(props) {
   }
 
   const updateStepNumber = (e) =>{
-    console.log('im in cell blur');
     // Update step number on cell losing focus
-    if(!isNaN(props.pointsTable[props.col][props.row - 1]) || props.pointsTable[props.col][props.row - 1] == '-'){
+    // if(!isNaN(props.pointsTable[props.col][props.row - 1]) || props.pointsTable[props.col][props.row - 1] == '-'){
 
-    // if(cellPoints){
+    if(cellPoints){
       props.setStepNumber(props.stepNumber + 1);
       // setIsFocussed(false)
     }
@@ -102,3 +104,7 @@ export default function CellElement(props) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  cellContainer: { borderRightWidth: 7 },
+});
