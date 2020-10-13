@@ -75,13 +75,13 @@ export default function CellElement(props) {
 
   function checkSecondCols(col,row){
     let pointsTable = props.pointsTable;
-    if((playerNumber(col) + parseInt(props.numberOfPlayers)) == col){
+    if((props.belongToPlayer + parseInt(props.numberOfPlayers)) == col){
       if(row == 16 && (pointsTable[col][row - 1] == undefined ||  isFocussed))
         return true;
-      else if(((row => 1 && row < 6) || (row > 7 && row < 16)) && pointsTable[col][row] != undefined && (pointsTable[col][row - 1] == undefined || isFocussed))
-        return true;
+      else if(((row >= 1 && row < 6) || (row > 7 && row < 16)) && pointsTable[col][row] != undefined && (pointsTable[col][row - 1] == undefined || isFocussed))
+          return true;
       else if(row == 6 && pointsTable[col][7] != undefined && (pointsTable[col][5] == undefined || isFocussed))
-        return true;
+          return true;
     }
     return false;
   }
