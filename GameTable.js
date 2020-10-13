@@ -31,52 +31,10 @@ export default class GameTable extends Component {
                 stepNumber = {this.props.stepNumber}
                 setStepNumber = {this.props.setStepNumber}
                 numberOfPlayers = {this.props.numberOfPlayers}
-                
-                canEdit = {this.checkEditable(col,row)}
               />
   }
 
-  checkEditable(col,row){
-    if(this.playerNumber(col) == (this.props.stepNumber % parseInt(this.props.numberOfPlayers))){
-      if( this.checkFirstCols(col,row) == true || 
-        this.checkSecondCols(col,row) == true || 
-        ((this.playerNumber(col) + parseInt(this.props.numberOfPlayers) * 2) == col)
-        ){
-          return true;
-      }
-    }
-    return false;
-  }
 
-  checkFirstCols(col,row){
-    let pointsTable = this.props.pointsTable;
-    if(this.playerNumber(col) == col){
-      if(row == 1 && pointsTable[col][row - 1] == undefined && pointsTable[col][row] == undefined)
-        return true;
-      else if(((row > 1 && row < 7) || (row > 8 && row <= 16)) && pointsTable[col][row - 2] != undefined && pointsTable[col][row - 1] == undefined)
-        return true;
-      else if(row == 8 && pointsTable[col][row - 3] != undefined && pointsTable[col][row - 1] == undefined)
-        return true;
-      // else if(row == 16 && pointsTable[col][row - 1] == undefined && pointsTable[col][row - 2] != undefined)
-      //   return true;
-    }
-    return false;
-  }
-
-  checkSecondCols(col,row){
-    let pointsTable = this.props.pointsTable;
-    if((this.playerNumber(col) + parseInt(this.props.numberOfPlayers)) == col){
-      if(row == 16 && pointsTable[col][row - 1] == undefined)
-        return true;
-      else if(((row => 1 && row < 6) || (row > 7 && row < 16)) && pointsTable[col][row - 1] == undefined && pointsTable[col][row] != undefined)
-        return true;
-      else if(row == 6 && pointsTable[col][row - 1] == undefined && pointsTable[col][row + 1] != undefined)
-        return true;
-      // else if(row == 1 && pointsTable[col][row - 1] == undefined && pointsTable[col][row] != undefined)
-      //   return true;
-    }
-    return false;
-  }
 
   playerNumber(col){
     let numberOfPlayers = parseInt(this.props.numberOfPlayers);

@@ -37,24 +37,9 @@ export default function CellElement(props) {
     setIsFocussed(true)
   }
 
-  function playerNumber(col){
-    let numberOfPlayers = parseInt(props.numberOfPlayers);
-    if((col % numberOfPlayers) == 0){
-      return 0;
-    }
-    else if (numberOfPlayers == 3){
-      if(((col + 1) % numberOfPlayers) == 0 )
-        return 2;
-      else
-        return 1;
-    }
-    else
-      return 1;
-  }
-
   function checkEditable(col,row){
-    if(playerNumber(col) == (props.stepNumber % parseInt(props.numberOfPlayers))){
-      if( checkFirstCols(col,row) == true || checkSecondCols(col,row) == true || ((playerNumber(col) + parseInt(props.numberOfPlayers) * 2) == col))
+    if(props.belongToPlayer == (props.stepNumber % parseInt(props.numberOfPlayers))){
+      if( checkFirstCols(col,row) == true || checkSecondCols(col,row) == true || ((props.belongToPlayer + parseInt(props.numberOfPlayers) * 2) == col))
         return true;
     }
     return false;
@@ -62,7 +47,7 @@ export default function CellElement(props) {
 
   function checkFirstCols(col,row){
     let pointsTable = props.pointsTable;
-    if(playerNumber(col) == col){
+    if(props.belongToPlayer == col){
       if(row == 1 && (pointsTable[col][row - 1] == undefined || isFocussed))
         return true;
       else if(((row > 1 && row < 7) || (row > 8 && row <= 16)) && pointsTable[col][row - 2] != undefined && (pointsTable[col][row - 1] == undefined || isFocussed))
@@ -75,13 +60,13 @@ export default function CellElement(props) {
 
   function checkSecondCols(col,row){
     let pointsTable = props.pointsTable;
-    if((playerNumber(col) + parseInt(props.numberOfPlayers)) == col){
+    if((props.belongToPlayer + parseInt(props.numberOfPlayers)) == col){
       if(row == 16 && (pointsTable[col][row - 1] == undefined ||  isFocussed))
         return true;
-      else if(((row => 1 && row < 6) || (row > 7 && row < 16)) && pointsTable[col][row] != undefined && (pointsTable[col][row - 1] == undefined || isFocussed))
-        return true;
+      else if(((row >= 1 && row < 6) || (row > 7 && row < 16)) && pointsTable[col][row] != undefined && (pointsTable[col][row - 1] == undefined || isFocussed))
+          return true;
       else if(row == 6 && pointsTable[col][7] != undefined && (pointsTable[col][5] == undefined || isFocussed))
-        return true;
+          return true;
     }
     return false;
   }
@@ -89,7 +74,7 @@ export default function CellElement(props) {
   return(      
     <View>
       <TextInput 
-        style={{textAlign: "center" , backgroundColor : props.canEdit == true ? '#e1ffe3': '#f6f8fa'}}
+        style={{textAlign: "center" , backgroundColor : checkEditable(props.col, props.row) == true ? '#e1ffe3': '#f6f8fa'}}
         // keyboardType={'numeric'}
         keyboardType = {'phone-pad'}
         // value = {cellPoints}
