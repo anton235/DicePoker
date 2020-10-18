@@ -1,22 +1,22 @@
 {
   "files": {
-    "app.js": "/DicePoker/static/js/app.608c7cd6.chunk.js",
-    "app.js.map": "/DicePoker/static/js/app.608c7cd6.chunk.js.map",
+    "app.js": "/DicePoker/static/js/app.278089ee.chunk.js",
+    "app.js.map": "/DicePoker/static/js/app.278089ee.chunk.js.map",
     "runtime~app.js": "/DicePoker/static/js/runtime~app.6f89e9ff.js",
     "runtime~app.js.map": "/DicePoker/static/js/runtime~app.6f89e9ff.js.map",
-    "static/js/2.53df8f94.chunk.js": "/DicePoker/static/js/2.53df8f94.chunk.js",
-    "static/js/2.53df8f94.chunk.js.map": "/DicePoker/static/js/2.53df8f94.chunk.js.map",
+    "static/js/2.dac82ff3.chunk.js": "/DicePoker/static/js/2.dac82ff3.chunk.js",
+    "static/js/2.dac82ff3.chunk.js.map": "/DicePoker/static/js/2.dac82ff3.chunk.js.map",
     "favicon-16.png": "/DicePoker/favicon-16.png",
     "favicon-32.png": "/DicePoker/favicon-32.png",
     "favicon.ico": "/DicePoker/favicon.ico",
     "index.html": "/DicePoker/index.html",
     "manifest.json": "/DicePoker/manifest.json",
     "serve.json": "/DicePoker/serve.json",
-    "static/js/2.53df8f94.chunk.js.LICENSE.txt": "/DicePoker/static/js/2.53df8f94.chunk.js.LICENSE.txt"
+    "static/js/2.dac82ff3.chunk.js.LICENSE.txt": "/DicePoker/static/js/2.dac82ff3.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime~app.6f89e9ff.js",
-    "static/js/2.53df8f94.chunk.js",
-    "static/js/app.608c7cd6.chunk.js"
+    "static/js/2.dac82ff3.chunk.js",
+    "static/js/app.278089ee.chunk.js"
   ]
 }

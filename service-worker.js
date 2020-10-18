@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/DicePoker/precache-manifest.c9a1d6a9dbd220967bc22fbe64140975.js"
+  "/DicePoker/precache-manifest.9ebce1b526ff63075585e86ade016ad4.js"
 );
 
 workbox.skipWaiting();

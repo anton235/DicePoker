@@ -4,8 +4,8 @@ self.__precacheManifest = [
     "url": "/DicePoker/register-service-worker.js"
   },
   {
-    "revision": "59b8eb02868c2d17195c",
-    "url": "/DicePoker/static/js/app.608c7cd6.chunk.js"
+    "revision": "6e74818ab892e67c7d84",
+    "url": "/DicePoker/static/js/app.278089ee.chunk.js"
   },
   {
     "revision": "37283b275d35a93b3e3a",
@@ -13,11 +13,11 @@ self.__precacheManifest = [
   },
   {
     "revision": "a990a8c98c379b1c14de33443329d80a",
-    "url": "/DicePoker/static/js/2.53df8f94.chunk.js.LICENSE.txt"
+    "url": "/DicePoker/static/js/2.dac82ff3.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "1439b15f0c9d388b31d6",
-    "url": "/DicePoker/static/js/2.53df8f94.chunk.js"
+    "revision": "1fb2a54e51d04dcbf603",
+    "url": "/DicePoker/static/js/2.dac82ff3.chunk.js"
   },
   {
     "revision": "ec543248d7b23864564429fc03837190",
@@ -28,7 +28,7 @@ self.__precacheManifest = [
     "url": "/DicePoker/manifest.json"
   },
   {
-    "revision": "14949880dda86db2f49b6c9b133e6361",
+    "revision": "740a5aa5ce111ce64cc3c074e8726e95",
     "url": "/DicePoker/index.html"
   },
   {
