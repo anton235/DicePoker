@@ -9,10 +9,8 @@ export default function CellElement(props) {
   const updateValue = (points) =>{
     // Get a copy of the expenses array
     const pointsTable = [ ...props.pointsTable ];
-
-    if(points)
-
-    // Replace the current expense item
+    if(points){
+          // Replace the current expense item
     pointsTable[props.col][props.row - 1] = points;
     pointsTable[props.col][6] = props.schoolSum(props.col);
     pointsTable[props.col][16] = props.colSum(props.col);
@@ -21,6 +19,7 @@ export default function CellElement(props) {
     setPointsTable(pointsTable);
     // Update cell value
     setCellPoints(points);
+    }
   }
 
   const updateStepNumber = (e) =>{
@@ -83,7 +82,6 @@ export default function CellElement(props) {
         onChangeText = {text => updateValue(text)}
         onBlur= {updateStepNumber}
         onFocus = {focus}
-        // editable = {isFocussed == true || props.canEdit ? true : false}
         maxLength = {3}
       /> 
     </View>
